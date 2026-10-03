@@ -28,7 +28,7 @@ const LOGIN_HTML = `<!DOCTYPE html>
     <div class="bg-white max-w-md w-full rounded-2xl shadow-xl border border-slate-100 p-8">
         <div class="text-center mb-8">
             <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Beziro.</h1>
-            <p class="text-slate-500 mt-2 text-sm">Restricted Access. Please verify your identity.</p>
+            <p class="text-slate-500 mt-2 text-sm" id="subtitle">Restricted Access. Please verify your identity.</p>
         </div>
         
         <div id="step1">
@@ -42,11 +42,19 @@ const LOGIN_HTML = `<!DOCTYPE html>
             <label class="block text-sm font-semibold text-slate-700 mb-2">Enter 6-digit OTP</label>
             <input type="text" id="otp" maxlength="6" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 mb-4 transition-all text-center tracking-[0.5em] font-bold text-lg" placeholder="000000">
             <button id="btnVerify" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition-colors">Verify & Enter</button>
-            <p id="err2" class="text-red-500 text-sm mt-3 hidden text-center"></p>
+            <p id="err2" class="text-red-500 text-sm mt-3 hidden text-center break-all"></p>
         </div>
     </div>
 
     <script>
+        // Check if there was a cookie error passed from the server
+        const urlParams = new URLSearchParams(window.location.search);
+        const ce = urlParams.get('ce');
+        if (ce) {
+            document.getElementById('subtitle').innerText = "Session expired or invalid: " + ce;
+            document.getElementById('subtitle').classList.add('text-red-500');
+        }
+
         let currentToken = '';
         
         document.getElementById('btnSend').onclick = async () => {
@@ -76,7 +84,7 @@ const LOGIN_HTML = `<!DOCTYPE html>
                     err.classList.remove('hidden');
                 }
             } catch (e) {
-                err.innerText = 'Network error';
+                err.innerText = 'Network error: ' + e.message;
                 err.classList.remove('hidden');
             }
             btn.innerText = 'Send OTP';
@@ -102,13 +110,13 @@ const LOGIN_HTML = `<!DOCTYPE html>
                 const data = await res.json();
                 
                 if (res.ok) {
-                    window.location.reload();
+                    window.location.href = '/';
                 } else {
-                    err.innerText = data.error || 'Invalid OTP';
+                    err.innerText = data.error + (data.debug_expectedSig ? (' | expected: ' + data.debug_expectedSig.substring(0, 10)) : '');
                     err.classList.remove('hidden');
                 }
             } catch (e) {
-                err.innerText = 'Network error';
+                err.innerText = 'Network error: ' + e.message;
                 err.classList.remove('hidden');
             }
             btn.innerText = 'Verify & Enter';
@@ -131,6 +139,7 @@ export async function onRequest(context) {
   const cookieHeader = request.headers.get('Cookie') || '';
   const match = cookieHeader.match(/beziro_auth=([^;]+)/);
   let authenticated = false;
+  let cookieError = '';
 
   if (match) {
     try {
@@ -143,16 +152,33 @@ export async function onRequest(context) {
         const expectedSig = await sign(expectedPayload, SECRET);
         if (clientSig === expectedSig) {
           authenticated = true;
+        } else {
+          cookieError = 'signature_mismatch';
         }
+      } else {
+        cookieError = 'expired';
       }
-    } catch(e) {}
+    } catch(e) {
+      cookieError = e.message;
+    }
   }
 
   if (authenticated) {
+    // Prevent redirect loops by stripping ?ce=
+    if (url.searchParams.has('ce')) {
+      url.searchParams.delete('ce');
+      return Response.redirect(url.toString(), 302);
+    }
     return next();
   }
 
-  return new Response(LOGIN_HTML, {
+  // Inject the cookie error into the HTML if there is one
+  let html = LOGIN_HTML;
+  if (cookieError) {
+     return Response.redirect(url.origin + '/?ce=' + encodeURIComponent(cookieError), 302);
+  }
+
+  return new Response(html, {
     headers: { 'Content-Type': 'text/html;charset=UTF-8' }
   });
 }

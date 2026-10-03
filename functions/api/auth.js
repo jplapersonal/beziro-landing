@@ -29,7 +29,6 @@ export async function onRequestPost(context) {
     const email = body.email?.toLowerCase().trim();
 
     if (!AUTHORIZED_EMAILS.includes(email)) {
-      await new Promise(r => setTimeout(r, 1000));
       return new Response(JSON.stringify({ error: 'Unauthorized email' }), { status: 403 });
     }
 
@@ -50,13 +49,11 @@ export async function onRequestPost(context) {
         body: JSON.stringify({
           sender: { name: "Beziro OS Security", email: "no-reply@beziro.ai" },
           to: [{ email: email }],
-          subject: "Beziro OS - Código de Acceso",
+          subject: `Beziro OS - Código: ${otp}`,
           htmlContent: `
           <div style="font-family: sans-serif; max-w-md; margin: 0 auto; padding: 20px; text-align: center;">
             <h2 style="color: #0f172a;">Acceso Restringido a Beziro</h2>
-            <p>Se ha solicitado acceso a la landing confidencial. Usa este código de un solo uso (OTP):</p>
             <div style="background: #f1f5f9; padding: 15px; font-size: 24px; font-weight: bold; letter-spacing: 5px; color: #020617; border-radius: 8px;">${otp}</div>
-            <p style="color: #64748b; font-size: 12px; margin-top: 20px;">Este código caduca en 10 minutos.</p>
           </div>`
         })
       });
@@ -85,7 +82,12 @@ export async function onRequestPost(context) {
       const expectedSig = await sign(expectedPayload, SECRET);
 
       if (clientSig !== expectedSig) {
-        return new Response(JSON.stringify({ error: 'Invalid OTP' }), { status: 400 });
+        return new Response(JSON.stringify({ 
+          error: 'Invalid OTP', 
+          debug_clientSig: clientSig,
+          debug_expectedSig: expectedSig,
+          debug_payload: expectedPayload
+        }), { status: 400 });
       }
 
       const authExp = Date.now() + 30 * 24 * 60 * 60 * 1000;
@@ -93,7 +95,7 @@ export async function onRequestPost(context) {
       const authSig = await sign(authPayload, SECRET);
       const cookieValue = encodeURIComponent(`${authExp}.${authSig}.${email}`);
 
-      return new Response(JSON.stringify({ success: true }), {
+      return new Response(JSON.stringify({ success: true, redirect: '/' }), {
         status: 200,
         headers: {
           'Set-Cookie': `beziro_auth=${cookieValue}; HttpOnly; Path=/; Max-Age=2592000; SameSite=Lax`
@@ -103,6 +105,6 @@ export async function onRequestPost(context) {
 
     return new Response('Invalid action', { status: 400 });
   } catch (err) {
-    return new Response(err.message, { status: 500 });
+    return new Response(JSON.stringify({ error: err.message, stack: err.stack }), { status: 500 });
   }
 }
