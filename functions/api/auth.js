@@ -82,12 +82,7 @@ export async function onRequestPost(context) {
       const expectedSig = await sign(expectedPayload, SECRET);
 
       if (clientSig !== expectedSig) {
-        return new Response(JSON.stringify({ 
-          error: 'Invalid OTP', 
-          debug_clientSig: clientSig,
-          debug_expectedSig: expectedSig,
-          debug_payload: expectedPayload
-        }), { status: 400 });
+        return new Response(JSON.stringify({ error: 'Invalid OTP' }), { status: 400 });
       }
 
       const authExp = Date.now() + 30 * 24 * 60 * 60 * 1000;
@@ -105,6 +100,6 @@ export async function onRequestPost(context) {
 
     return new Response('Invalid action', { status: 400 });
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message, stack: err.stack }), { status: 500 });
+    return new Response(JSON.stringify({ error: 'Server error' }), { status: 500 });
   }
 }
