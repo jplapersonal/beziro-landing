@@ -33,7 +33,7 @@ const LOGIN_HTML = `<!DOCTYPE html>
         
         <div id="step1">
             <label class="block text-sm font-semibold text-slate-700 mb-2">Authorized Email</label>
-            <input type="email" id="email" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 mb-4 transition-all" placeholder="jose@zeronetit.com">
+            <input type="email" id="email" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 mb-4 transition-all" placeholder="Escribe tu email aquí...">
             <button id="btnSend" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition-colors">Send OTP</button>
             <p id="err1" class="text-red-500 text-sm mt-3 hidden text-center"></p>
         </div>
@@ -50,7 +50,8 @@ const LOGIN_HTML = `<!DOCTYPE html>
         let currentToken = '';
         
         document.getElementById('btnSend').onclick = async () => {
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email').value.trim();
+            if (!email) return;
             const btn = document.getElementById('btnSend');
             const err = document.getElementById('err1');
             
@@ -83,8 +84,8 @@ const LOGIN_HTML = `<!DOCTYPE html>
         };
 
         document.getElementById('btnVerify').onclick = async () => {
-            const email = document.getElementById('email').value;
-            const otp = document.getElementById('otp').value;
+            const email = document.getElementById('email').value.trim();
+            const otp = document.getElementById('otp').value.trim();
             const btn = document.getElementById('btnVerify');
             const err = document.getElementById('err2');
             
@@ -121,37 +122,36 @@ export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
 
-  // Bypass API routes
   if (url.pathname.startsWith('/api/')) {
     return next();
   }
 
   const SECRET = env.AUTH_SECRET || 'beziro-dev-secret-123';
   
-  // Read Cookie
   const cookieHeader = request.headers.get('Cookie') || '';
   const match = cookieHeader.match(/beziro_auth=([^;]+)/);
   let authenticated = false;
 
   if (match) {
-    const [expStr, clientSig, email] = match[1].split('.');
-    const exp = parseInt(expStr, 10);
-    
-    if (Date.now() < exp) {
-      const expectedPayload = `auth:${email}:${expStr}`;
-      const expectedSig = await sign(expectedPayload, SECRET);
-      // Clean up base64 padding issues if any, or just direct compare
-      if (clientSig === expectedSig) {
-        authenticated = true;
+    try {
+      const decodedCookie = decodeURIComponent(match[1]);
+      const [expStr, clientSig, email] = decodedCookie.split('.');
+      const exp = parseInt(expStr, 10);
+      
+      if (Date.now() < exp) {
+        const expectedPayload = `auth:${email}:${expStr}`;
+        const expectedSig = await sign(expectedPayload, SECRET);
+        if (clientSig === expectedSig) {
+          authenticated = true;
+        }
       }
-    }
+    } catch(e) {}
   }
 
   if (authenticated) {
     return next();
   }
 
-  // Not authenticated -> Return Login HTML
   return new Response(LOGIN_HTML, {
     headers: { 'Content-Type': 'text/html;charset=UTF-8' }
   });

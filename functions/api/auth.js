@@ -29,14 +29,13 @@ export async function onRequestPost(context) {
     const email = body.email?.toLowerCase().trim();
 
     if (!AUTHORIZED_EMAILS.includes(email)) {
-      // Simulate delay to prevent timing attacks
       await new Promise(r => setTimeout(r, 1000));
       return new Response(JSON.stringify({ error: 'Unauthorized email' }), { status: 403 });
     }
 
     if (action === 'send') {
       const otp = Math.floor(100000 + Math.random() * 900000).toString();
-      const exp = Date.now() + 10 * 60 * 1000; // 10 mins
+      const exp = Date.now() + 10 * 60 * 1000;
       
       const payload = `${email}:${otp}:${exp}`;
       const signature = await sign(payload, SECRET);
@@ -66,13 +65,15 @@ export async function onRequestPost(context) {
         return new Response(JSON.stringify({ error: 'Failed to send email' }), { status: 500 });
       }
 
-      return new Response(JSON.stringify({ token: `${exp}.${signature}` }), { status: 200 });
+      return new Response(JSON.stringify({ token: encodeURIComponent(`${exp}.${signature}`) }), { status: 200 });
     }
 
     if (action === 'verify') {
-      const { otp, token } = body;
+      const otp = body.otp?.trim();
+      let token = body.token;
       if (!token) return new Response(JSON.stringify({ error: 'Missing token' }), { status: 400 });
       
+      token = decodeURIComponent(token);
       const [expStr, clientSig] = token.split('.');
       const exp = parseInt(expStr, 10);
 
@@ -87,10 +88,10 @@ export async function onRequestPost(context) {
         return new Response(JSON.stringify({ error: 'Invalid OTP' }), { status: 400 });
       }
 
-      const authExp = Date.now() + 30 * 24 * 60 * 60 * 1000; // 30 days
+      const authExp = Date.now() + 30 * 24 * 60 * 60 * 1000;
       const authPayload = `auth:${email}:${authExp}`;
       const authSig = await sign(authPayload, SECRET);
-      const cookieValue = `${authExp}.${authSig}.${email}`;
+      const cookieValue = encodeURIComponent(`${authExp}.${authSig}.${email}`);
 
       return new Response(JSON.stringify({ success: true }), {
         status: 200,
