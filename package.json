@@ -1,0 +1,9 @@
+{
+  "name": "beziro-landing",
+  "version": "1.0.0",
+  "description": "Beziro IT Reasoning OS Landing Page",
+  "scripts": {
+    "dev": "wrangler pages dev public",
+    "deploy": "wrangler pages deploy public --project-name beziro-landing"
+  }
+}
