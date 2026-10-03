@@ -49,7 +49,7 @@ export async function onRequestPost(context) {
           'api-key': BREVO_KEY
         },
         body: JSON.stringify({
-          sender: { name: "Beziro OS Security", email: "no-reply@beziro.ai" },
+          sender: { name: "Beziro OS Security", email: "jose@zeronetit.com" },
           to: [{ email: email }],
           subject: "Beziro OS - Código de Acceso",
           htmlContent: `
