@@ -1,4 +1,4 @@
-const AUTHORIZED_EMAILS = ['noreply@kiw.one', 'jose.pla@zeronetit.com'];
+const AUTHORIZED_EMAILS = ['no-reply@beziro.ai', 'jose.pla@zeronetit.com'];
 
 async function getHmacKey(secret) {
   const encoder = new TextEncoder();
@@ -49,7 +49,7 @@ export async function onRequestPost(context) {
           'api-key': BREVO_KEY
         },
         body: JSON.stringify({
-          sender: { name: "Beziro OS Security", email: "noreply@kiw.one" },
+          sender: { name: "Beziro OS Security", email: "no-reply@beziro.ai" },
           to: [{ email: email }],
           subject: "Beziro OS - Código de Acceso",
           htmlContent: `
