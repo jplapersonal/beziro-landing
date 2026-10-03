@@ -47,11 +47,10 @@ const LOGIN_HTML = `<!DOCTYPE html>
     </div>
 
     <script>
-        // Check if there was a cookie error passed from the server
         const urlParams = new URLSearchParams(window.location.search);
         const ce = urlParams.get('ce');
         if (ce) {
-            document.getElementById('subtitle').innerText = "Session expired or invalid: " + ce;
+            document.getElementById('subtitle').innerText = "Session invalid: " + ce;
             document.getElementById('subtitle').classList.add('text-red-500');
         }
 
@@ -110,9 +109,10 @@ const LOGIN_HTML = `<!DOCTYPE html>
                 const data = await res.json();
                 
                 if (res.ok) {
+                    // Prevent caching of the error URL
                     window.location.href = '/';
                 } else {
-                    err.innerText = data.error + (data.debug_expectedSig ? (' | expected: ' + data.debug_expectedSig.substring(0, 10)) : '');
+                    err.innerText = data.error;
                     err.classList.remove('hidden');
                 }
             } catch (e) {
@@ -144,7 +144,12 @@ export async function onRequest(context) {
   if (match) {
     try {
       const decodedCookie = decodeURIComponent(match[1]);
-      const [expStr, clientSig, email] = decodedCookie.split('.');
+      // Fix: Don't just split by . and grab the 3rd element, as email contains a dot!
+      const parts = decodedCookie.split('.');
+      const expStr = parts[0];
+      const clientSig = parts[1];
+      const email = parts.slice(2).join('.'); // Reconstruct email (e.g. jose.pla@zeronetit.com)
+      
       const exp = parseInt(expStr, 10);
       
       if (Date.now() < exp) {
@@ -164,7 +169,6 @@ export async function onRequest(context) {
   }
 
   if (authenticated) {
-    // Prevent redirect loops by stripping ?ce=
     if (url.searchParams.has('ce')) {
       url.searchParams.delete('ce');
       return Response.redirect(url.toString(), 302);
@@ -172,9 +176,9 @@ export async function onRequest(context) {
     return next();
   }
 
-  // Inject the cookie error into the HTML if there is one
   let html = LOGIN_HTML;
-  if (cookieError) {
+  // Make sure we only redirect if we aren't ALREADY on the error URL to prevent redirect loops
+  if (cookieError && !url.searchParams.has('ce')) {
      return Response.redirect(url.origin + '/?ce=' + encodeURIComponent(cookieError), 302);
   }
 
