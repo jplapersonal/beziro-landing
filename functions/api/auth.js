@@ -1,4 +1,4 @@
-const AUTHORIZED_EMAILS = ['no-reply@beziro.ai', 'jose.pla@zeronetit.com'];
+const AUTHORIZED_EMAILS = ['jose@zeronetit.com', 'jose.pla@zeronetit.com'];
 
 async function getHmacKey(secret) {
   const encoder = new TextEncoder();
