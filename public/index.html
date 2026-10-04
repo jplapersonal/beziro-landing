@@ -249,6 +249,64 @@
                 </div>
 
             </div>
+
+            <!-- Predictive Autonomy Block -->
+            <div class="flex flex-col lg:flex-row-reverse items-center gap-16 mt-24">
+                
+                <div class="lg:w-1/2">
+                    <h2 class="text-sm font-bold text-amber-500 uppercase tracking-widest mb-4">
+                        <span data-lang="en">Predictive Autonomy</span>
+                        <span data-lang="es">Autonomía Predictiva</span>
+                    </h2>
+                    <h3 class="text-3xl lg:text-5xl font-display font-bold text-beziro-900 mb-6 leading-tight">
+                        <span data-lang="en">Solving problems before they happen.</span>
+                        <span data-lang="es">Resolviendo problemas antes de que ocurran.</span>
+                    </h3>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-8">
+                        <span data-lang="en">You don't always have to ask. By analyzing millions of telemetry data points in real-time against your historical baseline, Beziro anticipates failures. It detects thermal risks, bandwidth exhaustion, or AI storms, and applies the necessary remediation autonomously, just notifying you of the disaster it just prevented.</span>
+                        <span data-lang="es">No siempre tienes que dar la orden. Al analizar millones de datos de telemetría en tiempo real contra tu histórico (TSDB), Beziro se anticipa. Detecta riesgos térmicos, colapsos de ancho de banda o ataques, y aplica la remediación necesaria de forma autónoma, notificándote únicamente del desastre que acaba de evitar.</span>
+                    </p>
+                    <div class="inline-flex items-center gap-3 bg-amber-50 border border-amber-100 rounded-full py-2 px-4">
+                        <span class="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
+                        <span class="text-sm font-bold text-amber-900"><span data-lang="en">Autonomous Remediation Active</span><span data-lang="es">Remediación Autónoma Activa</span></span>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 w-full">
+                    <div class="bg-slate-900 rounded-3xl p-8 shadow-2xl border border-slate-800 relative">
+                        <div class="absolute -top-3 -right-3 w-6 h-6 bg-red-500 rounded-full border-4 border-white animate-pulse"></div>
+                        <!-- Chat Bubble 1 (Beziro Alert) -->
+                        <div class="flex gap-4 mb-6">
+                            <div class="w-12 h-12 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-sm font-black text-white shadow-lg shadow-blue-500/30">Bz</div>
+                            <div class="bg-blue-950/40 rounded-2xl rounded-tl-none p-5 text-sm font-mono text-slate-300 shadow-sm border border-blue-500/30 w-full">
+                                <div class="text-amber-400 font-bold mb-3">
+                                    <span data-lang="en">⚠️ CRITICAL: Core Switch Thermal Shutdown Predicted</span>
+                                    <span data-lang="es">⚠️ CRÍTICO: Riesgo térmico en Switch Core detectado</span>
+                                </div>
+                                <div class="space-y-2 opacity-90 text-xs">
+                                    <div><span data-lang="en">&gt; Temp rising +20ºC in the last 15 min.</span><span data-lang="es">&gt; Tendencia alcista (+20ºC) en los últimos 15 min.</span></div>
+                                    <div><span data-lang="en">&gt; Autonomous action: Shutting down non-critical PoE ports...</span><span data-lang="es">&gt; Acción autónoma: Apagando puertos PoE no críticos...</span></div>
+                                </div>
+                                <div class="mt-4 text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-lg flex items-center gap-3">
+                                    <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    <span data-lang="en">Core saved. Blackout prevented (MTTR avoided: &gt;4h).</span>
+                                    <span data-lang="es">Core salvado. Apagón evitado (MTTR ahorrado: &gt;4h).</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Chat Bubble 2 (CEO Response) -->
+                        <div class="flex gap-4 flex-row-reverse">
+                            <div class="w-12 h-12 rounded-full bg-slate-700 flex-shrink-0 flex items-center justify-center text-sm font-bold text-white shadow-inner">CEO</div>
+                            <div class="bg-slate-800 rounded-2xl rounded-tr-none p-4 text-sm text-slate-200 shadow-sm border border-slate-700/50">
+                                <span data-lang="en">Excellent. Keep me posted if it rises again.</span>
+                                <span data-lang="es">Perfecto. Avísame si vuelve a subir.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </section>
 
