@@ -565,42 +565,63 @@
     <section id="capabilities" class="py-24 bg-slate-50 border-y border-slate-200">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-sm font-bold text-beziro-accent uppercase tracking-widest mb-2">
-                    <span data-lang="en">Core Capabilities</span>
-                    <span data-lang="es">Capacidades Principales</span>
+                <h2 class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">
+                    <span data-lang="en">Real World Use Cases</span>
+                    <span data-lang="es">Casos de Uso Reales</span>
                 </h2>
                 <h3 class="text-3xl lg:text-4xl font-display font-bold text-beziro-900 mb-6">
-                    <span data-lang="en">Built for the Autonomous Enterprise</span>
-                    <span data-lang="es">Diseñado para la Empresa Autónoma</span>
+                    <span data-lang="en">Solving Your Biggest IT Headaches</span>
+                    <span data-lang="es">Resolviendo los Mayores Dolores de Cabeza IT</span>
                 </h3>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Capability 1 -->
-                <div class="bg-white p-8 rounded-2xl border border-slate-200 hover:shadow-lg transition-shadow">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Use Case 1: TPV -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 hover:shadow-xl transition-shadow relative overflow-hidden group">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6 border border-blue-100">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                    </div>
                     <h4 class="text-xl font-bold text-beziro-900 mb-3">
-                        <span data-lang="en">Predictive Micro-Remediations</span>
-                        <span data-lang="es">Micro-Remediaciones Predictivas</span>
+                        <span data-lang="en">Point of Sale (POS) Protection</span>
+                        <span data-lang="es">Blindaje de Terminales TPV</span>
                     </h4>
-                    <p class="text-slate-500 text-sm leading-relaxed" data-lang="en">
-                        Before a bottleneck cascades into a site-wide outage, Beziro isolates the root cause and dynamically adjusts the network flow without human intervention.
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                        <span data-lang="en">If your POS systems drop offline, you lose revenue instantly. Beziro detects WAN jitter or network congestion and automatically re-routes payment traffic over a secure cellular backup or applies strict QoS to prioritize transactions.</span>
+                        <span data-lang="es">Si los TPVs de cobro se caen, la empresa deja de facturar. Beziro detecta congestión en la WAN y automáticamente enruta el tráfico de pagos por un backup móvil o aplica QoS estricto para priorizar las transacciones.</span>
                     </p>
-                    <p class="text-slate-500 text-sm leading-relaxed" data-lang="es">
-                        Antes de que un cuello de botella provoque una caída general, Beziro aísla la causa raíz y reajusta dinámicamente el flujo de red sin intervención humana.
-                    </p>
+                    <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-full inline-block"><span data-lang="en">Zero Lost Sales</span><span data-lang="es">Cero Ventas Perdidas</span></div>
                 </div>
-                <!-- Capability 2 -->
-                <div class="bg-white p-8 rounded-2xl border border-slate-200 hover:shadow-lg transition-shadow">
+
+                <!-- Use Case 2: Ransomware -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 hover:shadow-xl transition-shadow relative overflow-hidden group">
+                    <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center mb-6 border border-red-100">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                    </div>
                     <h4 class="text-xl font-bold text-beziro-900 mb-3">
-                        <span data-lang="en">Autonomous Resource Optimization</span>
-                        <span data-lang="es">Optimización Autónoma de Recursos</span>
+                        <span data-lang="en">Lateral Threat Containment</span>
+                        <span data-lang="es">Contención de Malware L2</span>
                     </h4>
-                    <p class="text-slate-500 text-sm leading-relaxed" data-lang="en">
-                        Inefficient traffic drains both bandwidth and budget. Beziro intelligently suppresses low-value consumption to guarantee resources for mission-critical operations.
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                        <span data-lang="en">When an infected device starts scanning the internal network for vulnerabilities, time is critical. Beziro detects the anomalous port-scanning behavior and autonomously isolates the switch port, quarantining the threat before it spreads.</span>
+                        <span data-lang="es">Cuando un equipo infectado escanea la red en busca de vulnerabilidades, el tiempo es crítico. Beziro detecta el comportamiento anómalo de escaneo y aísla autónomamente el puerto del switch, poniendo en cuarentena la amenaza en milisegundos.</span>
                     </p>
-                    <p class="text-slate-500 text-sm leading-relaxed" data-lang="es">
-                        El tráfico ineficiente drena tanto el ancho de banda como el presupuesto. Beziro suprime inteligentemente el consumo de bajo valor para garantizar los recursos de las operaciones críticas.
+                    <div class="text-[10px] font-bold text-red-600 uppercase tracking-widest bg-red-50 border border-red-100 px-3 py-1.5 rounded-full inline-block"><span data-lang="en">Instant Quarantine</span><span data-lang="es">Cuarentena Inmediata</span></div>
+                </div>
+
+                <!-- Use Case 3: Thermal Core -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 hover:shadow-xl transition-shadow relative overflow-hidden group">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-6 border border-amber-100">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" /></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-beziro-900 mb-3">
+                        <span data-lang="en">Thermal Hardware Protection</span>
+                        <span data-lang="es">Protección Térmica de Core</span>
+                    </h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                        <span data-lang="en">Overheating core switches cause massive building-wide outages. Beziro monitors physical metrics and intelligently shuts down non-critical PoE ports (like access points in empty rooms) to reduce thermal load and save the hardware.</span>
+                        <span data-lang="es">El sobrecalentamiento del switch principal provoca caídas masivas en toda la sede. Beziro monitoriza la temperatura y apaga inteligentemente los puertos PoE no críticos para reducir la carga de la fuente de alimentación y salvar el equipo.</span>
                     </p>
+                    <div class="text-[10px] font-bold text-amber-600 uppercase tracking-widest bg-amber-50 border border-amber-100 px-3 py-1.5 rounded-full inline-block"><span data-lang="en">Outage Prevented</span><span data-lang="es">Apagón Masivo Evitado</span></div>
                 </div>
             </div>
         </div>
