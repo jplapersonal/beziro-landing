@@ -61,6 +61,58 @@
         .reveal.in-view { opacity:1; transform:none; }
         @media (prefers-reduced-motion: reduce) { .log-scroll { animation:none; } .reveal, .trace-step { opacity:1 !important; transform:none !important; animation:none !important; } .conf-bar { width:98.7%; transition:none; } }
     </style>
+
+    <style>
+        @keyframes pulseRing {
+            0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; border-width: 1px; }
+        }
+        @keyframes flowOut {
+            0% { transform: translate(-50%, -50%); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))); opacity: 0; }
+        }
+        @keyframes flowIn {
+            0% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translate(-50%, -50%); opacity: 0; }
+        }
+        .pulse-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            border: 3px solid #10b981;
+            box-shadow: 0 0 30px #10b981, inset 0 0 30px #10b981;
+            animation: pulseRing 4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            pointer-events: none;
+        }
+        .pulse-ring-2 {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            border: 3px solid #3b82f6;
+            box-shadow: 0 0 30px #3b82f6, inset 0 0 30px #3b82f6;
+            animation: pulseRing 4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            animation-delay: 2s;
+            pointer-events: none;
+        }
+        .data-dot {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 6px; height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .dot-out { animation: flowOut 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; box-shadow: 0 0 12px 3px #3b82f6; }
+        .dot-in { animation: flowIn 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; box-shadow: 0 0 12px 3px #10b981; }
+    </style>
+
 </head>
 <body class="antialiased selection:bg-beziro-900 selection:text-white relative bg-mesh lang-en" id="body-tag">
 
@@ -686,66 +738,91 @@
     <!-- Who is this for -->
     <section class="py-24 bg-slate-50 border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="mb-16 text-center">
+            <div class="text-center mb-12">
                 <h2 class="text-sm font-bold text-beziro-accent uppercase tracking-widest mb-2">
-                    <span data-lang="en">Who is Beziro For?</span>
-                    <span data-lang="es">¿Para quién es Beziro?</span>
+                    <span data-lang="en">The IT Reasoning OS</span>
+                    <span data-lang="es">El IT Reasoning OS</span>
                 </h2>
-                <h3 class="text-3xl lg:text-4xl font-display font-bold text-beziro-900">
-                    <span data-lang="en">Solving different pains, with one unified OS.</span>
-                    <span data-lang="es">Resolviendo dolores distintos con un solo Sistema Operativo.</span>
+                <h3 class="text-4xl md:text-5xl font-display font-bold text-beziro-900 mb-6 tracking-tight">
+                    <span data-lang="en">Empowering the Business. Abstracting the IT.</span>
+                    <span data-lang="es">Empoderando al Negocio. Abstrayendo el IT.</span>
                 </h3>
+                <p class="text-lg text-slate-500 max-w-2xl mx-auto">
+                    <span data-lang="en">When the business needs to move fast, IT should not be a bottleneck. Beziro allows executives to enforce business rules directly onto the infrastructure.</span>
+                    <span data-lang="es">Cuando el negocio necesita moverse rápido, IT no debería ser un cuello de botella. Beziro permite aplicar reglas de negocio directamente sobre la infraestructura.</span>
+                </p>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Persona 1: C-Level -->
-                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                    </div>
-                    <h4 class="text-xl font-bold text-beziro-900 mb-2">
-                        <span data-lang="en">The Business Executive</span>
-                        <span data-lang="es">C-Level / Dirección</span>
-                    </h4>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-4">Data Centers · Retail · Hoteles</p>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                        <span data-lang="en"><strong>The Pain:</strong> Network outages mean immediate revenue loss and reputational damage. They hate technical excuses.<br/><br/><strong>The Solution:</strong> Beziro translates business intent ("Ensure POS payments never fail") into automated technical policies, keeping the business running 24/7 without manual intervention.</span>
-                        <span data-lang="es"><strong>El Dolor:</strong> Si se cae la red, se pierden ventas y reputación. Odian las excusas técnicas.<br/><br/><strong>La Solución:</strong> Beziro traduce directivas de negocio ("Que los cobros no fallen") en políticas técnicas automáticas, garantizando la continuidad operativa 24/7 sin intermediarios.</span>
-                    </p>
-                </div>
-                <!-- Persona 2: CIO -->
-                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
-                    </div>
-                    <h4 class="text-xl font-bold text-beziro-900 mb-2">
-                        <span data-lang="en">The COO / Operations Director</span>
-                        <span data-lang="es">Director de Operaciones / COO</span>
-                    </h4>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-4">Enterprise · Corporaciones</p>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                        <span data-lang="en"><strong>The Pain:</strong> A frozen budget and highly paid engineers burned out from repetitive L1 tasks and 3 AM alerts.<br/><br/><strong>The Solution:</strong> Beziro acts as an autonomous L2 engineer and your ultimate driver for operational efficiency. It automatically resolves 70% of network incidents at machine speed, drastically reducing support costs and freeing up the team.</span>
-                        <span data-lang="es"><strong>El Dolor:</strong> Presupuesto congelado y técnicos senior "quemados" apagando fuegos repetitivos o de madrugada.<br/><br/><strong>La Solución:</strong> Beziro actúa como tu ingeniero L2 incansable y es el mayor vector de eficiencia operativa. Resuelve el 70% de las incidencias automáticamente a velocidad de máquina, reduciendo drásticamente los costes de soporte y liberando talento.</span>
-                    </p>
-                </div>
-                <!-- Persona 3: MSP -->
-                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+
+            <!-- Animated Architecture Diagram embedded here -->
+            <div class="relative max-w-5xl mx-auto flex justify-center items-center mb-24">
+                <img src="/architecture-radial-light.jpg" alt="Beziro Radial Architecture" class="w-full h-auto object-contain mix-blend-multiply filter contrast-125 brightness-105" style="-webkit-mask-image: radial-gradient(50% 50% at 50% 50%, black 60%, transparent 100%); mask-image: radial-gradient(50% 50% at 50% 50%, black 60%, transparent 100%); relative z-10;" />
+                
+                <!-- Animated Core -->
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring-2"></div>
+                
+                <!-- Data Flow Inwards (Business Intent) -->
+                <div class="data-dot dot-in" style="--tx: -200px; --ty: -150px; animation-delay: 0.2s;"></div>
+                <div class="data-dot dot-in" style="--tx: -280px; --ty: 50px; animation-delay: 0.7s;"></div>
+                <div class="data-dot dot-in" style="--tx: -150px; --ty: 200px; animation-delay: 1.2s;"></div>
+                <div class="data-dot dot-in" style="--tx: 50px; --ty: -220px; animation-delay: 0.5s;"></div>
+                
+                <!-- Data Flow Outwards (Infrastructure Execution) -->
+                <div class="data-dot dot-out" style="--tx: 250px; --ty: -100px; animation-delay: 0.1s;"></div>
+                <div class="data-dot dot-out" style="--tx: 300px; --ty: 120px; animation-delay: 0.8s;"></div>
+                <div class="data-dot dot-out" style="--tx: 100px; --ty: 250px; animation-delay: 1.5s;"></div>
+                <div class="data-dot dot-out" style="--tx: 200px; --ty: -200px; animation-delay: 1.1s;"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- CEO / General Manager -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition-shadow">
                     <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6">
                         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                     </div>
                     <h4 class="text-xl font-bold text-beziro-900 mb-2">
-                        <span data-lang="en">The MSP Owner</span>
-                        <span data-lang="es">Dueño de MSP / MSSP</span>
+                        <span data-lang="en">The CEO / Hotel Director</span>
+                        <span data-lang="es">El CEO / Director de Hotel</span>
                     </h4>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-4">Managed Service Providers</p>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                        <span data-lang="en"><strong>The Pain:</strong> Profit margins are capped. Scaling requires hiring more expensive technical staff linearly to handle ticket volume.<br/><br/><strong>The Solution:</strong> Break linear scalability. Deploy Beziro across clients to proactively solve issues before a ticket is even opened, allowing a 10x multiplier on operational margins.</span>
-                        <span data-lang="es"><strong>El Dolor:</strong> Escalar el negocio requiere contratar más técnicos para absorber los tickets, estancando el margen de beneficio.<br/><br/><strong>La Solución:</strong> Rompe la dependencia lineal. Beziro actúa como tu Nivel 1 en todos tus clientes, resolviendo problemas proactivamente antes de que se abra un ticket. Margen x10.</span>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6 mt-4">
+                        <span data-lang="en"><strong>The Intent:</strong> "Make sure our VIP guests don't experience any Netflix buffering in their suites tonight."<br/><br/><strong>The Execution:</strong> Instead of waiting days for IT to configure complex QoS rules, Beziro instantly translates this business instruction into multi-vendor bandwidth allocation across the switches and APs.</span>
+                        <span data-lang="es"><strong>La Intención:</strong> "Asegura que los huéspedes VIP no tengan cortes viendo Netflix en su suite esta noche."<br/><br/><strong>La Ejecución:</strong> En lugar de esperar días a que IT configure QoS, Beziro traduce al instante esta instrucción de negocio en reglas de priorización multimarca en los switches y APs.</span>
+                    </p>
+                </div>
+
+                <!-- The CFO -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-beziro-900 mb-2">
+                        <span data-lang="en">The CFO</span>
+                        <span data-lang="es">El CFO</span>
+                    </h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6 mt-4">
+                        <span data-lang="en"><strong>The Intent:</strong> "Reduce the energy consumption of our infrastructure during after-hours to lower OpEx."<br/><br/><strong>The Execution:</strong> The CFO simply states the goal. The IT Reasoning OS securely logs into the controllers, powering down non-critical APs and putting unused switch ports into deep sleep mode every night.</span>
+                        <span data-lang="es"><strong>La Intención:</strong> "Reducir el consumo eléctrico de la infraestructura en horario after-hours para bajar los costes operativos."<br/><br/><strong>La Ejecución:</strong> El CFO solo define el objetivo. El IT Reasoning OS accede a los controladores, apagando APs no críticos y poniendo puertos en suspensión profunda cada noche.</span>
+                    </p>
+                </div>
+
+                <!-- Sustainability Director -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-beziro-900 mb-2">
+                        <span data-lang="en">Sustainability Director</span>
+                        <span data-lang="es">Director de Sostenibilidad</span>
+                    </h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6 mt-4">
+                        <span data-lang="en"><strong>The Intent:</strong> "Lower the PoE power output across all branch switches during the off-season to hit our carbon targets."<br/><br/><strong>The Execution:</strong> No need to ask IT to run a massive script. Beziro automatically adjusts the Power over Ethernet budgets across thousands of remote switches, enforcing corporate sustainability policies instantly.</span>
+                        <span data-lang="es"><strong>La Intención:</strong> "Bajar la potencia PoE en los switches de todas las sucursales fuera de temporada para cumplir objetivos de carbono."<br/><br/><strong>La Ejecución:</strong> Sin pedirle a IT que haga scripts masivos. Beziro ajusta automáticamente el Power over Ethernet en miles de switches remotos, aplicando la política al instante.</span>
                     </p>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- Market Opportunity & Business Model -->
     <section class="py-24 text-white relative bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.6)), url('/assets/bg-dark.jpg');">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
@@ -809,29 +886,6 @@
         </div>
     </section>
 <!-- Ecosystem Logos (Original SVGs adapted to slate-400) -->
-    
-    <!-- Architecture Diagram Section -->
-    <section class="py-24 bg-white border-t border-slate-100">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-            <h2 class="text-sm font-bold text-beziro-accent uppercase tracking-widest mb-4">
-                <span data-lang="en">The IT Reasoning OS</span>
-                <span data-lang="es">El IT Reasoning OS</span>
-            </h2>
-            <h3 class="font-display text-4xl md:text-5xl font-bold text-beziro-900 mb-12">
-                <span data-lang="en">Connecting Business Intent with Infrastructure Execution</span>
-                <span data-lang="es">Conectando la Intención de Negocio con la Ejecución</span>
-            </h3>
-            
-            <div class="relative max-w-5xl mx-auto flex justify-center">
-                <img src="/architecture-radial-light.jpg" alt="Beziro Radial Architecture" class="w-full h-auto object-contain mix-blend-multiply filter contrast-125 brightness-105" style="-webkit-mask-image: radial-gradient(50% 50% at 50% 50%, black 50%, transparent 100%); mask-image: radial-gradient(50% 50% at 50% 50%, black 50%, transparent 100%);" />
-            </div>
-            
-            <p class="mt-8 text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed">
-                <span data-lang="en">Business requests flow inward to the center. The IT Reasoning OS translates them in real-time, deploying autonomous configurations outward to the infrastructure nodes.</span>
-                <span data-lang="es">Las necesidades de negocio fluyen hacia el centro. El IT Reasoning OS las traduce en tiempo real, desplegando configuraciones de forma autónoma hacia los nodos de infraestructura.</span>
-            </p>
-        </div>
-    </section>
     
     <section id="ecosystem" class="py-24 border-y border-slate-200 bg-white">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
