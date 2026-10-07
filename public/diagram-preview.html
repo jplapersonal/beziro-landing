@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beziro | Diagram Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#020617] text-white flex items-center justify-center min-h-screen p-4 md:p-8 font-sans">
+    <div class="max-w-6xl w-full">
+        <!-- Text adapted for VCs/Investors -->
+        <div class="text-center mb-16">
+            <h2 class="text-xs md:text-sm font-bold text-emerald-500 uppercase tracking-widest mb-4">The IT Reasoning OS</h2>
+            <h3 class="font-display text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-emerald-300 to-emerald-400 mb-6">
+                Reimagine how networks<br class="hidden md:block" /> heal, adapt and scale.
+            </h3>
+            <p class="mt-4 text-slate-400 text-lg md:text-xl max-w-2xl mx-auto">
+                Beziro connects your multi-vendor reality into a single Agentic Model, empowering your NOC with autonomous execution capabilities.
+            </p>
+        </div>
+
+        <!-- Flow Container -->
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-0 relative mt-16">
+            
+            <!-- Background connecting line (Desktop) -->
+            <div class="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-slate-800 via-emerald-500/50 to-blue-500/50 -translate-y-1/2 z-0"></div>
+
+            <!-- Step 1: INGEST -->
+            <div class="relative z-10 bg-[#0f172a] border border-slate-700/80 p-8 rounded-[1.25rem] w-full lg:w-[31%] shadow-xl hover:border-slate-500 transition-colors duration-300 group">
+                <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center mb-6 border border-slate-700 group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                </div>
+                <h4 class="font-display text-xl font-bold text-slate-200 mb-3 tracking-tight">1. Ingest</h4>
+                <p class="text-sm text-slate-400 leading-relaxed font-medium">
+                    Universal Context. We silently assimilate multi-vendor telemetry, syslogs, and configurations in real-time.
+                </p>
+            </div>
+
+            <!-- Arrow (Mobile) -->
+            <div class="lg:hidden w-1 h-8 bg-gradient-to-b from-slate-800 to-emerald-500/50"></div>
+
+            <!-- Step 2: REASON -->
+            <div class="relative z-10 bg-[#020617] border border-emerald-500/50 p-8 rounded-[1.25rem] w-full lg:w-[34%] shadow-[0_0_40px_rgba(16,185,129,0.15)] transform lg:scale-110 group">
+                <!-- Glowing core background -->
+                <div class="absolute inset-0 bg-emerald-500/5 blur-xl rounded-[1.25rem] -z-10"></div>
+                <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-6 border border-emerald-500/50 group-hover:bg-emerald-500/20 transition-colors duration-300">
+                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h4 class="font-display text-xl font-bold text-emerald-400 mb-3 tracking-tight">2. Reason</h4>
+                <p class="text-sm text-slate-300 leading-relaxed font-medium">
+                    Agentic Engine. Deep contextual analysis cross-correlating network reality with pure business logic.
+                </p>
+            </div>
+
+            <!-- Arrow (Mobile) -->
+            <div class="lg:hidden w-1 h-8 bg-gradient-to-b from-emerald-500/50 to-blue-500/50"></div>
+
+            <!-- Step 3: EXECUTE -->
+            <div class="relative z-10 bg-[#0f172a] border border-slate-700/80 p-8 rounded-[1.25rem] w-full lg:w-[31%] shadow-xl hover:border-blue-500/50 transition-colors duration-300 group">
+                <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 border border-blue-500/30 group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                </div>
+                <h4 class="font-display text-xl font-bold text-slate-200 mb-3 tracking-tight">3. Execute</h4>
+                <p class="text-sm text-slate-400 leading-relaxed font-medium">
+                    Zero MTTR. Autonomous self-healing, API-driven QoS shaping, and dynamic multi-path routing changes.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
